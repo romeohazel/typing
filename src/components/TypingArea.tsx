@@ -38,17 +38,19 @@ export function TypingArea({
     inner.style.transform = `translateY(-${offset}px)`;
 
     // Position caret at the current char within the active word.
+    // Char spans' offsetLeft/Top are already relative to the inner div
+    // (same offsetParent as the word), so do NOT add the word's offsets.
     const charSpans = active.children;
     let x: number;
     let y: number;
     if (charIndex < charSpans.length) {
       const ch = charSpans[charIndex] as HTMLElement;
-      x = active.offsetLeft + ch.offsetLeft;
-      y = active.offsetTop + ch.offsetTop;
+      x = ch.offsetLeft;
+      y = ch.offsetTop;
     } else if (charSpans.length > 0) {
       const lastCh = charSpans[charSpans.length - 1] as HTMLElement;
-      x = active.offsetLeft + lastCh.offsetLeft + lastCh.offsetWidth;
-      y = active.offsetTop + lastCh.offsetTop;
+      x = lastCh.offsetLeft + lastCh.offsetWidth;
+      y = lastCh.offsetTop;
     } else {
       x = active.offsetLeft;
       y = active.offsetTop;
