@@ -47,13 +47,13 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="mx-auto w-full max-w-3xl px-4 pt-6">
-        <h1 className="text-xl text-neutral-300">
+      <header className="mx-auto w-full max-w-4xl px-6 pt-5">
+        <h1 className="text-lg text-neutral-300">
           type<span className="text-yellow-400">.</span>
         </h1>
       </header>
 
-      <main className="flex flex-1 flex-col justify-center gap-8 py-10">
+      <main className="flex flex-1 flex-col justify-center gap-5 pb-16">
         <DurationPicker
           duration={state.duration}
           disabled={state.phase === 'running'}
@@ -70,10 +70,11 @@ export default function App() {
             secondsLeft={state.secondsLeft}
           />
         )}
-        <div className="mx-auto w-full max-w-3xl px-4 text-sm text-neutral-600">
-          esc — restart
-        </div>
       </main>
+
+      <footer className="mx-auto w-full max-w-4xl px-6 pb-4 text-xs text-neutral-600">
+        esc — restart
+      </footer>
     </div>
   );
 }

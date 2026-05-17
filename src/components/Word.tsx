@@ -4,23 +4,14 @@ import type { TypedWord } from '../hooks/useTypingEngine';
 interface Props {
   target: string;
   typed: TypedWord | undefined;
-  isActive: boolean;
-  charIndex: number;
-}
-
-function Caret() {
-  return (
-    <span className="caret pointer-events-none absolute left-0 top-[0.15em] bottom-[0.15em] w-[2px] bg-yellow-400" />
-  );
 }
 
 const WordImpl = forwardRef<HTMLSpanElement, Props>(function Word(
-  { target, typed, isActive, charIndex },
+  { target, typed },
   ref
 ) {
   const chars = typed?.chars ?? [];
   const renderedLen = Math.max(target.length, chars.length);
-  const showTrailingCaret = isActive && charIndex >= renderedLen;
 
   const spans = [];
   for (let i = 0; i < renderedLen; i++) {
@@ -36,10 +27,8 @@ const WordImpl = forwardRef<HTMLSpanElement, Props>(function Word(
         glyph = tc.char;
       }
     }
-    const showCaret = isActive && charIndex === i;
     spans.push(
-      <span key={i} className={`relative ${color}`}>
-        {showCaret && <Caret />}
+      <span key={i} className={color}>
         {glyph}
       </span>
     );
@@ -48,11 +37,6 @@ const WordImpl = forwardRef<HTMLSpanElement, Props>(function Word(
   return (
     <span ref={ref} className="word inline-block">
       {spans}
-      {showTrailingCaret && (
-        <span className="relative inline-block w-0 align-baseline">
-          <Caret />
-        </span>
-      )}
     </span>
   );
 });
